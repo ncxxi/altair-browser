@@ -15,7 +15,7 @@ class Components(context: Context) {
     }
 
     val engine: GeckoEngine by lazy {
-        GeckoEngine(context, runtime, DefaultSettings())
+        GeckoEngine(context, DefaultSettings(), runtime)
     }
 
     val store: BrowserStore by lazy {

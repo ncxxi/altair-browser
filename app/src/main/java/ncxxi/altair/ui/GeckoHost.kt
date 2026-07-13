@@ -30,6 +30,7 @@ fun GeckoHost(modifier: Modifier = Modifier) {
                 SessionFeature(
                     store = components.store,
                     goBackUseCase = components.sessionUseCases.goBack,
+                    goForwardUseCase = components.sessionUseCases.goForward,
                     engineView = engineView,
                 ).also { feature ->
                     feature.start()
