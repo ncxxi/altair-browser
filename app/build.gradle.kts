@@ -1,3 +1,5 @@
+import org.gradle.api.artifacts.result.ModuleComponentIdentifier
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -38,6 +40,31 @@ android {
     buildFeatures {
         compose = true
     }
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/*.kotlin_module",
+            )
+        }
+    }
+}
+
+configurations.configureEach {
+    resolutionStrategy.capabilitiesResolution.withCapability("org.mozilla.telemetry:glean-native") {
+        val geckoview = candidates.find {
+            it.id is ModuleComponentIdentifier && it.id.module.contains("geckoview")
+        }
+        if (geckoview != null) {
+            select(geckoview)
+            because("use GeckoView Glean instead of standalone Glean")
+        }
+    }
 }
 
 dependencies {
@@ -54,5 +81,10 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     debugImplementation(libs.androidx.ui.tooling)
 
-    implementation(libs.geckoview)
+    implementation(libs.mozilla.browser.engine.gecko)
+    implementation(libs.mozilla.browser.state)
+    implementation(libs.mozilla.compose.browser.toolbar)
+    implementation(libs.mozilla.feature.session)
+    implementation(libs.mozilla.concept.engine)
+    implementation(libs.mozilla.support.ktx)
 }
