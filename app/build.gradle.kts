@@ -1,5 +1,3 @@
-import org.gradle.api.artifacts.result.ModuleComponentIdentifier
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -57,11 +55,11 @@ android {
 
 configurations.configureEach {
     resolutionStrategy.capabilitiesResolution.withCapability("org.mozilla.telemetry:glean-native") {
-        val geckoview = candidates.find {
-            it.id is ModuleComponentIdentifier && it.id.module.contains("geckoview")
+        val gv = candidates.firstOrNull { c ->
+            (c.id as? org.gradle.api.artifacts.result.ModuleComponentIdentifier)?.module?.contains("geckoview") == true
         }
-        if (geckoview != null) {
-            select(geckoview)
+        if (gv != null) {
+            select(gv)
             because("use GeckoView Glean instead of standalone Glean")
         }
     }
