@@ -1,1 +1,3 @@
-placeholder.
+# altair-browser
+
+A browser project.
