@@ -1,3 +1,1 @@
-# altair-browser
-
-A browser project.
+altair-browser
