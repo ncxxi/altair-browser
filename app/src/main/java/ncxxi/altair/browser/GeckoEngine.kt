@@ -7,8 +7,10 @@ import kotlinx.coroutines.flow.update
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
+import org.mozilla.geckoview.GeckoSession.AllowOrDeny
 import org.mozilla.geckoview.GeckoSession.ContentDelegate
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
+import org.mozilla.geckoview.GeckoSession.PermissionDelegate
 import org.mozilla.geckoview.GeckoSession.ProgressDelegate
 
 class GeckoEngine private constructor(
@@ -31,6 +33,8 @@ class GeckoEngine private constructor(
             override fun onLocationChange(
                 session: GeckoSession,
                 url: String?,
+                permissions: MutableList<PermissionDelegate.ContentPermission>,
+                hasChangedFlag: Boolean,
             ) {
                 _state.update { it.copy(url = url ?: "about:blank") }
             }
@@ -52,7 +56,7 @@ class GeckoEngine private constructor(
             override fun onLoadRequest(
                 session: GeckoSession,
                 request: NavigationDelegate.LoadRequest,
-            ): GeckoResult<NavigationDelegate.AllowOrDeny>? {
+            ): GeckoResult<AllowOrDeny>? {
                 return GeckoResult.allow()
             }
         }

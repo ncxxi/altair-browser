@@ -19,8 +19,8 @@ fun GeckoHost(
     AndroidView(
         modifier = modifier,
         factory = { context ->
-            GeckoView(context).apply {
-                session = engine.session
+            GeckoView(context).also { view ->
+                view.setSession(engine.session)
             }
         },
     )
