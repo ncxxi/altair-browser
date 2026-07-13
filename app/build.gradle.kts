@@ -55,9 +55,7 @@ android {
 
 configurations.configureEach {
     resolutionStrategy.capabilitiesResolution.withCapability("org.mozilla.telemetry:glean-native") {
-        val gv = candidates.firstOrNull { c ->
-            (c.id as? org.gradle.api.artifacts.result.ModuleComponentIdentifier)?.module?.contains("geckoview") == true
-        }
+        val gv = candidates.firstOrNull { c -> c.id.toString().contains("geckoview") }
         if (gv != null) {
             select(gv)
             because("use GeckoView Glean instead of standalone Glean")
