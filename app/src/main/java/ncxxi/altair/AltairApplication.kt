@@ -1,13 +1,10 @@
 package ncxxi.altair
 
 import android.app.Application
-import org.mozilla.geckoview.GeckoRuntime
 
 class AltairApplication : Application() {
 
-    val geckoRuntime: GeckoRuntime by lazy {
-        GeckoRuntime.create(this)
-    }
+    val components by lazy { Components(this) }
 
     companion object {
         @Volatile
