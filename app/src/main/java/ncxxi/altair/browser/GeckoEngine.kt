@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.update
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
-import org.mozilla.geckoview.GeckoSession.AllowOrDeny
 import org.mozilla.geckoview.GeckoSession.ContentDelegate
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSession.PermissionDelegate
@@ -51,13 +50,6 @@ class GeckoEngine private constructor(
                 canGoForward: Boolean,
             ) {
                 _state.update { it.copy(canGoForward = canGoForward) }
-            }
-
-            override fun onLoadRequest(
-                session: GeckoSession,
-                request: NavigationDelegate.LoadRequest,
-            ): GeckoResult<AllowOrDeny>? {
-                return GeckoResult.allow()
             }
         }
 
